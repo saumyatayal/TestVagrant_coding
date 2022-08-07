@@ -20,3 +20,22 @@ class Validation_Helper(object):
                     no_of_players+=1
 
         return no_of_players
+
+    def validate_number_wicket_keepers(self,team_data,no_of_wicket_keepers):
+        if "player" in team_data.keys():
+            no_of_players = self.number_of_players_with_given_role(team_data['player'],"Wicket-keeper")
+            if no_of_players >= no_of_wicket_keepers:
+                return True, "team has atleast " +str(no_of_wicket_keepers) + " wicket keepers"
+            else:
+                return False, "no of wicket keepers in team is: " +str(no_of_players)
+        else:
+            return False, "Player list not found in the given json"
+
+    def number_of_players_with_given_role(self,players_data,player_role):
+        no_of_players = 0
+        for player_entry in players_data:
+            if 'role' in player_entry:
+                if player_entry['role'].lower() == player_role.lower():
+                    no_of_players+=1
+
+        return no_of_players
